@@ -1,0 +1,2 @@
+# smas
+Stoichiometric MAtrix Solver

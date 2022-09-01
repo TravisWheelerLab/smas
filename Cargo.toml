@@ -1,0 +1,25 @@
+[package]
+name = "smas"
+version = "0.1.0"
+edition = "2021"
+authours = ["Jack Roddy"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = "3.2.16"
+nalgebra = "0.31.1"
+wasm-bindgen = "0.2.82"
+web-sys = { version = "0.3.59", features = ["console"] }
+
+[[bin]]
+name = "smas"
+path = "./src/main.rs"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "smas"
+path = "./src/lib.rs"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false

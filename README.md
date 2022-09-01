@@ -5,10 +5,12 @@ To build this project, you'll first need to install rust. You can accomplish thi
 
 Once you have rust installed, you can build smas by running cargo:
 
-  git clone https://github.com/TravisWheelerLab/smas/
-  cd smas
-  cargo build
- 
+```
+git clone https://github.com/TravisWheelerLab/smas/
+cd smas
+cargo build
+```
+
 With smas built, you can run smas with cargo:
 
 ```

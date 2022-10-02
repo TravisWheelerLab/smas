@@ -1,5 +1,5 @@
 % amed015 accumulation vector
-39 1 39
+39 1
   1.93560e3
   -1.18726e4
   -2.00000e0

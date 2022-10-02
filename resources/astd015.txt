@@ -1,5 +1,5 @@
 % astd015 accumulation vector
-39 1 39
+39 1
   -2.00000e2
   -1.22400e3
   9.78030e-7

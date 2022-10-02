@@ -94,19 +94,19 @@ fn read_matrix_file<R: AsRef<Path>>(path: R) -> Option<MatrixData> {
 
     let mut mat_data: Vec<f64> = vec!();
 
-    let mut rows: Option<usize> = None;
-    let mut cols: Option<usize> = None;
-    let mut total: Option<usize> = None;
+    let mut rows: usize = 0;
+    let mut cols: usize = 0;
 
     while let Some(Ok(line)) = mat_lines.next() {
         if !line.starts_with('%') {
             let split: Vec<&str> = line.split_whitespace().collect();
-            rows = Some(usize::from_str(split[0]).expect("failed to parse row count"));
-            cols = Some(usize::from_str(split[1]).expect("failed to parse column count"));
-            total = Some(usize::from_str(split[2]).expect("failed to parse total value count"));
+            rows = usize::from_str(split[0]).expect("failed to parse row count");
+            cols = usize::from_str(split[1]).expect("failed to parse column count");
             break;
         }
     }
+
+    let total: usize = rows * cols;
 
     for line in mat_lines {
         if let Ok(line) = line {
@@ -117,13 +117,13 @@ fn read_matrix_file<R: AsRef<Path>>(path: R) -> Option<MatrixData> {
         }
     }
 
-    if mat_data.len() != total.expect("total value count was not parsed") {
+    if mat_data.len() != total {
         return None;
     }
 
     Some(MatrixData {
-        ncols: cols.expect("column count was not parsed"),
-        nrows: rows.expect("row count was not parsed"),
+        ncols: cols,
+        nrows: rows,
         values: mat_data,
     })
 }
@@ -145,10 +145,10 @@ pub fn format_vector_flat(
         let val: f64 = row[0];
         match float_format {
             FloatFormat::Decimal => {
-                result_string.push_str(&format!("  {val:.float_precision$}"))
+                result_string.push_str(&format!("{val:.float_precision$}"))
             }
             FloatFormat::Scientific => {
-                result_string.push_str(&format!("  {val:.float_precision$e}"));
+                result_string.push_str(&format!("{val:.float_precision$e}"));
             }
         }
         if i < vector.nrows() - 1 {
@@ -205,7 +205,7 @@ pub fn format_comparison_results(
     epsilon: f64,
 ) -> String {
     let mut result_string = String::new();
-    let reactions_delta = reactions_computed - reactions_true;
+    // let reactions_delta = reactions_computed - reactions_true;
 
     result_string.push_str("% computed \t true \t |delta| \t |delta|<=epsilon\n");
 
